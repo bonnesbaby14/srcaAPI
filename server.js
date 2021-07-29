@@ -1,6 +1,17 @@
 const express = require("express");
 const app = express();
+const jwt = require("jsonwebtoken");
+const bodyParser = require("body-parser");
+const keyJWT = require("./config/jwtConfig");
 
+app.set("key", keyJWT.key);
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+const secret = {
+  secret: process.env.SECRET || "secret",
+  algorithms: ["HS256"],
+};
 const obj = {
   name: "name",
   lastname: "lastname",
@@ -50,6 +61,24 @@ app.get("/", (req, res) => {
   res.json(obj);
 });
 
-app.get("/clients", (req, res) => {
-  res.send(clientes);
+app.post("/login", (req, res) => {
+  const payload = {
+    check: true,
+  };
+  const token = jwt.sign(payload, app.get("key"), {
+    expiresIn: 60,
+  });
+  res.json({
+    mensaje: "Autenticación correcta",
+    token: token,
+  });
 });
+
+// app.get("/clients", jwt(secret), (req, res) => {
+//   console.log(req);
+//   if (req.user.client) {
+//     res.send(clientes);
+//   }
+
+//   res.status(401).send({ message: "no autorizado" });
+// });
