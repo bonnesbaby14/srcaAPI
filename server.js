@@ -84,16 +84,29 @@ app.post("/login", (req, res) => {
   });
 });
 
-app.post("/clients", (req, res) => {
+app.get("/clients", (req, res) => {
   jwt.verify(req.headers.authorization, app.get("key"), function (err, user) {
     if (err) {
-      console.log("hubo un error");
       res.status(401).send({
         error: "Token inválido",
       });
     } else {
-      console.log("estamos aqui");
       res.json(clientes);
+    }
+  });
+});
+
+app.get("/logout", (req, res) => {
+  jwt.verify(req.headers.authorization, app.get("key"), function (err, user) {
+    if (err) {
+      res.status(401).send({
+        error: "Token inválido",
+      });
+    } else {
+      jwt.destroy(req.headers.authorization);
+      res.status(200).send({
+        state: "logout",
+      });
     }
   });
 });
