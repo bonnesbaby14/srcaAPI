@@ -1,7 +1,9 @@
 const controller = {};
 const jwt = require("jsonwebtoken");
 const express = require("express");
-
+const app = express();
+const keyJWT = require("../config/jwtConfig");
+app.set("key", keyJWT.key);
 const { json } = require("express");
 
 const obj = {

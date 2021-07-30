@@ -2,8 +2,7 @@ const express = require("express");
 const app = express();
 
 const bodyParser = require("body-parser");
-const keyJWT = require("./config/jwtConfig");
-app.set("key", keyJWT.key);
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const routecustomer = require("./routes/customer");
