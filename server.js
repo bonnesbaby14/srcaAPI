@@ -76,7 +76,7 @@ app.post("/login", (req, res) => {
     check: true,
   };
   const token = jwt.sign(payload, app.get("key"), {
-    expiresIn: 20,
+    expiresIn: 120,
   });
   res.json({
     mensaje: "Autenticación correcta",
