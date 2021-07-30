@@ -51,7 +51,16 @@ const clientes = [
     mail: "correo5@mail.com",
   },
 ];
-
+//provisional en localhost
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  next();
+});
 app.listen(5000, () => {
   console.log("Server running on port 3000");
 });
@@ -62,11 +71,12 @@ app.get("/", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
+  console.log(req.body);
   const payload = {
     check: true,
   };
   const token = jwt.sign(payload, app.get("key"), {
-    expiresIn: 60,
+    expiresIn: 20,
   });
   res.json({
     mensaje: "Autenticación correcta",
@@ -74,11 +84,16 @@ app.post("/login", (req, res) => {
   });
 });
 
-// app.get("/clients", jwt(secret), (req, res) => {
-//   console.log(req);
-//   if (req.user.client) {
-//     res.send(clientes);
-//   }
-
-//   res.status(401).send({ message: "no autorizado" });
-// });
+app.post("/clients", (req, res) => {
+  jwt.verify(req.headers.authorization, app.get("key"), function (err, user) {
+    if (err) {
+      console.log("hubo un error");
+      res.status(401).send({
+        error: "Token inválido",
+      });
+    } else {
+      console.log("estamos aqui");
+      res.json(clientes);
+    }
+  });
+});
