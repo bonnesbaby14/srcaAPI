@@ -1,8 +1,14 @@
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+require("dotenv").config({ path: "./.env" });
 const clientModel = require("../models/clientModel");
+console.log(process.env.MONGOPASSWORD);
 const uri =
-  "mongodb+srv://srcaAdmin2021:srcaAdmin2021+@srcamongodb.aadmf.mongodb.net/srcaDB?retryWrites=true&w=majority";
+  "mongodb+srv://" +
+  process.env.MONGOUSER +
+  ":" +
+  process.env.MONGOPASSWORD +
+  "@srcamongodb.aadmf.mongodb.net/srcaDB?retryWrites=true&w=majority";
 
 mongoose
   .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
