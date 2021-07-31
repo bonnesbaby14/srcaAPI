@@ -1,3 +1,3 @@
 module.exports = {
-  key: "srcaKeyamy*+-",
+  key: process.env.JWTKEY,
 };
