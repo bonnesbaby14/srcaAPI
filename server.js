@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+require("./config/mongoconfig");
 
 const bodyParser = require("body-parser");
 
