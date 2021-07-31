@@ -5,46 +5,16 @@ const app = express();
 const keyJWT = require("../config/jwtConfig");
 app.set("key", keyJWT.key);
 const { json } = require("express");
+const clientModel = require("../models/clientModel");
+const projectModel = require("../models/projectModel");
+const ticketModel = require("../models/ticketModel");
 
 const obj = {
   name: "name",
   lastname: "lastname",
   new: "new ",
 };
-const clientes = [
-  {
-    id: "cwfweq121edqd",
-    nombre: "gabriel rodriguez",
-    fecha: "12-02-21",
-    image: "imagenURI",
-    telefono: "3317473102",
-    mail: "correo@mail.com",
-  },
-  {
-    id: "cwfw67781ssewad",
-    nombre: "alfonso rodriguez",
-    fecha: "21-5-19",
-    image: "imagenURI2",
-    telefono: "332222222",
-    mail: "correo2@mail.com",
-  },
-  {
-    id: "cwfw1092872ssewad",
-    nombre: "alfonso angeles",
-    fecha: "01-07-16",
-    image: "imagenURI3",
-    telefono: "888882222",
-    mail: "correo4@mail.com",
-  },
-  {
-    id: "lañapsm2ssewad",
-    nombre: "gabriel angeles",
-    fecha: "31-10-12",
-    image: "imagenURI4",
-    telefono: "666682222",
-    mail: "correo5@mail.com",
-  },
-];
+
 controller.logout = (req, res) => {
   jwt.verify(req.headers.authorization, app.get("key"), function (err, user) {
     if (err) {
@@ -59,14 +29,29 @@ controller.logout = (req, res) => {
     }
   });
 };
-controller.clients = (req, res) => {
+controller.clients = async (req, res) => {
   jwt.verify(req.headers.authorization, app.get("key"), function (err, user) {
     if (err) {
       res.status(401).send({
         error: "Token inválido",
       });
     } else {
-      res.json(clientes);
+      clientModel.find().then((data) => {
+        res.send(data);
+      });
+    }
+  });
+};
+controller.projects = async (req, res) => {
+  jwt.verify(req.headers.authorization, app.get("key"), function (err, user) {
+    if (err) {
+      res.status(401).send({
+        error: "Token inválido",
+      });
+    } else {
+      clientModel.find().then((data) => {
+        res.send(data);
+      });
     }
   });
 };
