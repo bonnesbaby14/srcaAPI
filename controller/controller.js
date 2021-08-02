@@ -83,9 +83,29 @@ controller.upClient = async (req, res) => {
         error: "Token inválido",
       });
     } else {
-      projectModel.find().then((data) => {
-        // res.send(data);
-      });
+      if (
+        req.body.name === "" ||
+        req.body.phone === "" ||
+        req.body.mail === "" ||
+        req.body.website === ""
+      ) {
+        console.log("entro algo ");
+        res.json({ error: "errorData" });
+      } else {
+        const data = new clientModel({
+          name: req.body.name,
+          phone: req.body.phone,
+          mail: req.body.mail,
+          website: req.body.website,
+          image: "noimage ",
+          date: new Date(),
+        });
+        data.save((err) => {
+          err
+            ? res.json({ error: "errorSave" })
+            : res.json({ error: "noError" });
+        });
+      }
     }
   });
 };
