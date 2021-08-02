@@ -1,9 +1,9 @@
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 require("dotenv").config({ path: "./.env" });
-// const clientModel = require("../models/clientModel");
-// const projectModel = require("../models/projectModel");
-// const ticketModel = require("../models/ticketModel");
+const clientModel = require("../models/clientModel");
+const projectModel = require("../models/projectModel");
+const ticketModel = require("../models/ticketModel");
 console.log(process.env.MONGOPASSWORD);
 const uri =
   "mongodb+srv://" +
