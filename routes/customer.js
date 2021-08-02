@@ -9,7 +9,7 @@ router.post("/login", controller.login);
 router.get("/projects", controller.projects);
 router.get("/tickets", controller.tickets);
 
-router.post("/upProjects", controller.upProject);
+router.post("/upProject", controller.upProject);
 router.post("/upClient", controller.upClient);
 router.post("/upTicket", controller.upTicket);
 module.exports = router;

@@ -116,9 +116,31 @@ controller.upProject = async (req, res) => {
         error: "Token inválido",
       });
     } else {
-      projectModel.find().then((data) => {
-        // res.send(data);
-      });
+      if (
+        req.body.name === "" ||
+        req.body.description === "" ||
+        req.body.price === "" ||
+        req.body.date1 === "" ||
+        req.body.id_client === ""
+      ) {
+        console.log("entro algo ");
+        res.json({ error: "errorData" });
+      } else {
+        const data = new projectModel({
+          name: req.body.name,
+          description: req.body.description,
+          precio: req.body.price,
+          date_start: req.body.date1,
+          date_finish: req.body.date2 || "",
+          id_client: req.body.id_client,
+        });
+        data.save((err) => {
+          console.log(err);
+          err
+            ? res.json({ error: "errorSave" })
+            : res.json({ error: "noError" });
+        });
+      }
     }
   });
 };
