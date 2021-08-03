@@ -9,7 +9,7 @@ const ticketSchema = new Schema({
     type: String,
     required: true,
   },
-  import: {
+  _import: {
     type: Number,
     required: true,
   },

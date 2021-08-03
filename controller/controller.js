@@ -57,8 +57,16 @@ controller.tickets = async (req, res) => {
         error: "Token inválido",
       });
     } else {
-      ticketModel.find().then((data) => {
-        res.send(data);
+      ticketModel.find().then((tickets) => {
+        clientModel.find().then((clients) => {
+          projectModel.find().then((projects) => {
+            res.send({
+              tickets: tickets,
+              clients: clients,
+              projects: projects,
+            });
+          });
+        });
       });
     }
   });
@@ -166,7 +174,7 @@ controller.upTicket = async (req, res) => {
         const data = new ticketModel({
           date: req.body.date1,
           payment: req.body.payment,
-          import: req.body.import,
+          _import: req.body.import,
           signature: req.body.signature,
           id_client: req.body.id_client,
           id_project: req.body.id_project,
