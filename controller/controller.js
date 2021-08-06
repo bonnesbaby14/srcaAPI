@@ -117,6 +117,67 @@ controller.upClient = async (req, res) => {
     }
   });
 };
+controller.updateClient = async (req, res) => {
+  jwt.verify(req.headers.authorization, app.get("key"), function (err, user) {
+    if (err) {
+      res.status(401).send({
+        error: "Token inválido",
+      });
+    } else {
+      if (
+        req.body._id === "" ||
+        req.body.name === "" ||
+        req.body.phone === "" ||
+        req.body.mail === "" ||
+        req.body.date === "" ||
+        req.body.website === ""
+      ) {
+        console.log("entro algo ");
+        res.json({ error: "errorData" });
+      } else {
+        const id = req.body._id;
+        clientModel.updateOne(
+          { _id: id },
+          {
+            name: req.body.name,
+            phone: req.body.phone,
+            mail: req.body.mail,
+            website: req.body.website,
+            image: "noimage ",
+            date: req.body.date1,
+          },
+          (err) => {
+            err
+              ? res.json({ error: "errorSave" })
+              : res.json({ error: "noError" });
+          }
+        );
+      }
+    }
+  });
+};
+controller.removeClient = async (req, res) => {
+  jwt.verify(req.headers.authorization, app.get("key"), function (err, user) {
+    if (err) {
+      res.status(401).send({
+        error: "Token inválido",
+      });
+    } else {
+      if (req.body._id === "") {
+        res.json({ error: "errorData" });
+      } else {
+        const id = req.body._id;
+        clientModel
+          .deleteOne({ _id: id })
+          .then(() => {
+            console.log("se elimnino");
+            res.json({ error: "noError" });
+          })
+          .catch(() => res.json({ error: "errorSave" }));
+      }
+    }
+  });
+};
 controller.upProject = async (req, res) => {
   jwt.verify(req.headers.authorization, app.get("key"), function (err, user) {
     if (err) {
@@ -152,6 +213,67 @@ controller.upProject = async (req, res) => {
     }
   });
 };
+controller.updateProject = async (req, res) => {
+  jwt.verify(req.headers.authorization, app.get("key"), function (err, user) {
+    if (err) {
+      res.status(401).send({
+        error: "Token inválido",
+      });
+    } else {
+      if (
+        req.body._id === "" ||
+        req.body.name === "" ||
+        req.body.description === "" ||
+        req.body.price === "" ||
+        req.body.date1 === "" ||
+        req.body.id_client === ""
+      ) {
+        console.log("entro algo ");
+        res.json({ error: "errorData" });
+      } else {
+        const id = req.body._id;
+        projectModel.updateOne(
+          { _id: id },
+          {
+            name: req.body.name,
+            description: req.body.description,
+            precio: req.body.price,
+            date_start: req.body.date1,
+            date_finish: req.body.date2 || "",
+            id_client: req.body.id_client,
+          },
+          (err) => {
+            err
+              ? res.json({ error: "errorSave" })
+              : res.json({ error: "noError" });
+          }
+        );
+      }
+    }
+  });
+};
+controller.removeProject = async (req, res) => {
+  jwt.verify(req.headers.authorization, app.get("key"), function (err, user) {
+    if (err) {
+      res.status(401).send({
+        error: "Token inválido",
+      });
+    } else {
+      if (req.body._id === "") {
+        res.json({ error: "errorData" });
+      } else {
+        projectModel
+          .deleteOne({ _id: id })
+          .then(() => {
+            console.log("se elimnino");
+            res.json({ error: "noError" });
+          })
+          .catch(() => res.json({ error: "errorSave" }));
+      }
+    }
+  });
+};
+
 controller.upTicket = async (req, res) => {
   console.table(req.body);
   jwt.verify(req.headers.authorization, app.get("key"), function (err, user) {
