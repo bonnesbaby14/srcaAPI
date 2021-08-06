@@ -12,4 +12,7 @@ router.get("/tickets", controller.tickets);
 router.post("/upProject", controller.upProject);
 router.post("/upClient", controller.upClient);
 router.post("/upTicket", controller.upTicket);
+router.post("/updateTicket", controller.updateTicket);
+// router.post("/deleteTicket", controller.deleteTicket);
+
 module.exports = router;

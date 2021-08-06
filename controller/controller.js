@@ -163,7 +163,7 @@ controller.upTicket = async (req, res) => {
       if (
         req.body.date1 === "" ||
         req.body.payment === "" ||
-        req.body.import === "" ||
+        req.body._import === "" ||
         req.body.signature === "" ||
         req.body.id_client === "" ||
         req.body.id_project === ""
@@ -174,7 +174,7 @@ controller.upTicket = async (req, res) => {
         const data = new ticketModel({
           date: req.body.date1,
           payment: req.body.payment,
-          _import: req.body.import,
+          _import: req.body._import,
           signature: req.body.signature,
           id_client: req.body.id_client,
           id_project: req.body.id_project,
@@ -184,6 +184,45 @@ controller.upTicket = async (req, res) => {
             ? res.json({ error: "errorSave" })
             : res.json({ error: "noError" });
         });
+      }
+    }
+  });
+};
+controller.updateTicket = async (req, res) => {
+  jwt.verify(req.headers.authorization, app.get("key"), function (err, user) {
+    if (err) {
+      res.status(401).send({
+        error: "Token inválido",
+      });
+    } else {
+      if (
+        req.body._id === "" ||
+        req.body.date1 === "" ||
+        req.body.payment === "" ||
+        req.body._import === "" ||
+        req.body.signature === "" ||
+        req.body.id_client === "" ||
+        req.body.id_project === ""
+      ) {
+        res.json({ error: "errorData" });
+      } else {
+        const id = req.body._id;
+        ticketModel.updateOne(
+          { _id: id },
+          {
+            date: req.body.date1,
+            payment: req.body.payment,
+            _import: req.body._import,
+            signature: req.body.signature,
+            id_client: req.body.id_client,
+            id_project: req.body.id_project,
+          },
+          (err) => {
+            err
+              ? res.json({ error: "errorSave" })
+              : res.json({ error: "noError" });
+          }
+        );
       }
     }
   });
