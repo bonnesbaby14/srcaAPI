@@ -227,4 +227,26 @@ controller.updateTicket = async (req, res) => {
     }
   });
 };
+
+controller.removeTicket = async (req, res) => {
+  jwt.verify(req.headers.authorization, app.get("key"), function (err, user) {
+    if (err) {
+      res.status(401).send({
+        error: "Token inválido",
+      });
+    } else {
+      if (req.body._id === "") {
+        res.json({ error: "errorData" });
+      } else {
+        ticketModel
+          .deleteOne({ _id: id })
+          .then(() => {
+            console.log("se elimnino");
+            res.json({ error: "noError" });
+          })
+          .catch(() => res.json({ error: "errorSave" }));
+      }
+    }
+  });
+};
 module.exports = controller;
