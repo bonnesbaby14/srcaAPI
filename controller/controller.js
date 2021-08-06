@@ -262,6 +262,7 @@ controller.removeProject = async (req, res) => {
       if (req.body._id === "") {
         res.json({ error: "errorData" });
       } else {
+        const id = req.body._id;
         projectModel
           .deleteOne({ _id: id })
           .then(() => {
