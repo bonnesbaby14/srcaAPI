@@ -76,7 +76,7 @@ controller.login = (req, res) => {
     check: true,
   };
   const token = jwt.sign(payload, app.get("key"), {
-    expiresIn: 1120,
+    expiresIn: 11920,
   });
   res.json({
     mensaje: "Autenticación correcta",
@@ -132,7 +132,8 @@ controller.updateClient = async (req, res) => {
         req.body.date === "" ||
         req.body.website === ""
       ) {
-        console.log("entro algo ");
+        console.log("entro algo");
+        console.table(req.body);
         res.json({ error: "errorData" });
       } else {
         const id = req.body._id;
@@ -179,6 +180,7 @@ controller.removeClient = async (req, res) => {
   });
 };
 controller.upProject = async (req, res) => {
+  console.table(req.body);
   jwt.verify(req.headers.authorization, app.get("key"), function (err, user) {
     if (err) {
       res.status(401).send({
@@ -190,9 +192,10 @@ controller.upProject = async (req, res) => {
         req.body.description === "" ||
         req.body.price === "" ||
         req.body.date1 === "" ||
-        req.body.id_client === ""
+        req.body.id_cliente === ""
       ) {
-        console.log("entro algo ");
+        console.log("entro un errro");
+        console.table(req.body);
         res.json({ error: "errorData" });
       } else {
         const data = new projectModel({
@@ -201,10 +204,9 @@ controller.upProject = async (req, res) => {
           precio: req.body.price,
           date_start: req.body.date1,
           date_finish: req.body.date2 || "",
-          id_client: req.body.id_client,
+          id_client: req.body.id_cliente,
         });
         data.save((err) => {
-          console.log(err);
           err
             ? res.json({ error: "errorSave" })
             : res.json({ error: "noError" });
@@ -229,6 +231,7 @@ controller.updateProject = async (req, res) => {
         req.body.id_client === ""
       ) {
         console.log("entro algo ");
+        console.table(req.body);
         res.json({ error: "errorData" });
       } else {
         const id = req.body._id;
