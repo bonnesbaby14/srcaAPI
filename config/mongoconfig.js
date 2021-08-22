@@ -4,6 +4,7 @@ require("dotenv").config({ path: "./.env" });
 const clientModel = require("../models/clientModel");
 const projectModel = require("../models/projectModel");
 const ticketModel = require("../models/ticketModel");
+console.log(process.env.MONGOUSER);
 console.log(process.env.MONGOPASSWORD);
 const uri =
   "mongodb+srv://" +
@@ -55,4 +56,7 @@ mongoose
     // clientModel.find().then((data) => {
     //   console.log(data);
     // });
+  })
+  .catch((err) => {
+    console.log("hubo un errror en la conexion: " + err);
   });

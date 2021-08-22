@@ -43,8 +43,13 @@ controller.projects = async (req, res) => {
         error: "Token inválido",
       });
     } else {
-      projectModel.find().then((data) => {
-        res.send(data);
+      clientModel.find().then((clients) => {
+        projectModel.find().then((projects) => {
+          res.send({
+            clients: clients,
+            projects: projects,
+          });
+        });
       });
     }
   });
